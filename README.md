@@ -1,35 +1,43 @@
-# ZEGO Token Server (Ready-to-run)
+# ZEGO Token Server
 
-This is a minimal token server for **ZEGOCLOUD** using Express and the official `zego_server_assistant` code
-(bundled locally, no npm package needed). It exposes:
+Backend companion for the Vimo live streaming app. It exposes a minimal HTTP API that generates ZEGO Cloud tokens using the official `zego_server_assistant`.
+
+## Endpoints
 
 - `GET /health` → `{ "status": "ok" }`
-- `GET /zegotoken?userID=<id>` → `{ "token": "..." }`
+- `POST /token` → `{ "token": "..." }`
+  - Body (JSON): `{ "userId": "<viewer_or_host_id>", "roomId": "<live_room_id>" }`
 
-## 1) Setup
+## Setup
+
 ```bash
 npm install
-copy .env.example .env   # then fill ZEGO_APP_ID and ZEGO_SERVER_SECRET
+cp .env.example .env   # fill ZEGO_APP_ID, ZEGO_SERVER_SECRET, optional callback values
 ```
 
-## 2) Run
+## Run
+
 ```bash
-npm start
-# or: node server.js
+npm start              # uses server.js (legacy GET endpoint)
+# or
+npm run start:zego     # uses src/server/zego-server.js (POST /token endpoint)
 ```
 
-## 3) Test
-- Health:  http://localhost:8080/health
-- Token:   http://localhost:8080/zegotoken?userID=test
+## Testing
+
+- Health:  `http://localhost:8080/health`
+- Token:   `curl -X POST http://localhost:8080/token -H "Content-Type: application/json" -d '{"userId":"viewer_1","roomId":"test_live"}'`
 
 ### Android notes
-- On an **emulator**, use:   http://10.0.2.2:8080
-- On a **real device** on the same Wi‑Fi, use the PC IP:  http://<PC_IP>:8080
-- If using HTTP on Android, add to AndroidManifest inside `<application>`:
+
+- Emulator: `http://10.0.2.2:8080`
+- Real device on same Wi‑Fi: `http://<PC_IP>:8080`
+- If using plain HTTP, add inside `<application>` in `AndroidManifest.xml`:
   ```xml
   android:usesCleartextTraffic="true"
   ```
 
 ## Notes
-- Do **not** commit `.env`.
-- The `zego_server_assistant` folder is included locally (taken from the official repo).
+
+- Do **not** commit `.env` (already ignored).
+- The `zego_server_assistant` directory is bundled locally from the official GitHub repository.
