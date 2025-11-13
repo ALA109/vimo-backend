@@ -37,6 +37,26 @@ app.get('/zegotoken', (req, res) => {
   }
 });
 
+app.post('/token', (req, res) => {
+  try {
+    if (!APP_ID || !SERVER_SECRET) {
+      return res.status(400).json({
+        error: 'Missing ZEGO_APP_ID or ZEGO_SERVER_SECRET in .env'
+      });
+    }
+    const { userId } = req.body;
+    if (!userId || typeof userId !== 'string' || userId.trim() === '') {
+      return res.status(400).json({ error: 'Request body must include a valid "userId" string' });
+    }
+
+    const token = generateToken04(APP_ID, userId.trim(), SERVER_SECRET, 3600, '');
+    res.json({ token });
+  } catch (e) {
+    console.error('Token error:', e);
+    res.status(500).json({ error: 'Failed to generate token' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`ZEGO token server on ${PORT}`);
 });
