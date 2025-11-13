@@ -1,0 +1,43 @@
+name: vimo
+description: "A modern short-video social app built with Flutter & Supabase."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  get: ^4.6.5
+  supabase_flutter: ^2.10.3
+  supabase: ^2.10.0
+  video_player: ^2.8.1
+  image_picker: ^1.0.4
+  path_provider: ^2.1.4
+  cached_network_image: ^3.3.1
+  flutter_dotenv: ^5.1.0
+
+  lottie: ^3.3.2
+  http: ^1.2.2
+  zego_uikit_prebuilt_live_streaming: 3.15.0
+  zego_uikit: ^2.28.23
+  zego_uikit_signaling_plugin: ^2.8.15
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/default_avatar.png
+    - assets/lottie/
